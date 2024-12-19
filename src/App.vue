@@ -126,10 +126,11 @@ export default {
 <style>
 body {
   font-family: 'Crimson Pro', serif;
-  background-color: #FAF7F2;
+  background-color: #F5DEB3; /* Warna coklat terang */
   color: #252525;
   margin: 0;
   padding: 0;
   line-height: 1.6;
 }
 </style>
+

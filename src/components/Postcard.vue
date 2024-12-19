@@ -20,10 +20,11 @@ export default {
 
 <style scoped>
 .card {
-  border: none;
+  border: 1px solid #D7C8A1;
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #F8F3E6;
 }
 
 .card:hover {
@@ -34,10 +35,25 @@ export default {
 .card-img-top {
   height: 200px;
   object-fit: cover;
-  border-radius: 15px;
+  border-radius: 15px 15px 0 0;
 }
 
 .card-body {
   padding: 20px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  color: #3E2723;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  color: #5D4037;
+}
+
+.badge.bg-secondary {
+  background-color: #795548;
+  color: #ffffff;
 }
 </style>

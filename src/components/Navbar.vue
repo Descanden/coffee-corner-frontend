@@ -138,4 +138,33 @@ export default {
   width: 100%;
   border-radius: 15px;
 }
+
+.modal-content {
+  background-color: #F5EFE6;
+  border: 1px solid #D7C8A1;
+  color: #5A3E2B;
+}
+
+.modal-header {
+  border-bottom: 1px solid #D7C8A1;
+}
+
+.modal-title {
+  color: #8B5E3C;
+}
+
+.btn-primary {
+  background-color: #8B5E3C;
+  color: #FFFFFF;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #5A3E2B;
+}
+
+.btn-secondary {
+  background-color: #6C757D;
+  border: none;
+}
 </style>
