@@ -1,0 +1,246 @@
+/* Body */
+body {
+    font-family: 'Crimson Pro', serif;
+    background-color: #FAF7F2;  /* Background coklat muda */
+    color: #252525;  /* Warna teks coklat gelap */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    width: 100%;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 80px;
+    background-color: #D7C8A1;  /* Warna coklat muda untuk navbar */
+    margin-bottom: 0px;
+    border-radius: 8px;
+}
+
+.navbar .logo {
+    font-size: 28px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #3E2723;  /* Warna coklat gelap */
+    cursor: default;
+}
+
+.navbar nav a {
+    margin: 0 15px;
+    text-decoration: none; /* Menghilangkan garis bawah */
+    color: #3E2723; /* Warna coklat gelap */
+    font-weight: 600;
+    cursor: default;  /* Menjaga kursor tetap normal, tanpa pointer */
+}
+
+.navbar nav a:hover {
+    color: inherit; /* Tidak ada perubahan warna saat hover */
+}
+
+/* Login Button */
+.login {
+    background-color: #FAF7F2;
+    border: 1px solid #3E2723;
+    border-radius: 16px;
+    padding: 10px 45px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 25%;
+    margin-right: -50px;
+    padding-left: 100px;
+    border-left: 1px solid #D7C8A1;
+}
+
+.sidebar h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    margin: 10px 0;
+    font-weight: 600;
+}
+
+/* Hyperlink yang Tidak Terlihat seperti Tautan */
+.sidebar ul li a {
+    text-decoration: none;  /* Menghilangkan garis bawah pada hyperlink */
+    color: #3E2723;         /* Warna coklat gelap */
+    font-weight: 600;       /* Menebalkan teks */
+    display: block;         /* Membuat setiap item menu dalam satu baris vertikal */
+    padding: 8px 0;         /* Menambahkan padding vertikal untuk jarak antar item */
+    transition: color 0.3s ease; /* Efek transisi warna saat hover */
+    cursor: default;        /* Menjaga kursor tetap normal, tanpa pointer */
+}
+
+/* Menghapus efek hover pada hyperlink di sidebar */
+.sidebar ul li a:hover {
+    color: #3E2723;         /* Tidak ada perubahan warna saat hover */
+    text-decoration: none;  /* Menghindari garis bawah pada hover */
+}
+
+.sidebar .dropdown-btn {
+    background-color: transparent;
+    border: none;
+    font-family: 'Crimson Pro', serif;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    display: block;
+    padding: 8px 0;
+    color: #3E2723;
+    width: 100%;
+}
+
+.sidebar .dropdown-content {
+    display: none;
+    list-style: none;
+    padding-left: 15px;
+    margin-top: 5px;
+}
+
+.sidebar .dropdown-content li a {
+    font-size: 0.9em;
+    padding: 5px 0;
+    color: #3E2723;
+}
+
+.sidebar .dropdown-content li a:hover {
+    color: #FF6F00;  /* Hover dengan warna oranye coklat saat di-hover */
+}
+
+.sidebar .dropdown-btn:focus + .dropdown-content,
+.sidebar .dropdown-btn:hover + .dropdown-content {
+    display: block;
+}
+
+/* Blog Section */
+.blog-section {
+    width: 70%;
+}
+
+.articles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+article {
+    width: 25%;
+    background-color: #FFFFFF;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+article img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+article:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+article .info span {
+    font-size: 0.9em;
+    color: #FF6F00;
+    font-weight: 700;
+}
+
+article .info h2 {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+article .info p {
+    font-size: 0.9em;
+    color: #3E2723;
+}
+
+/* Pagination */
+.pagination {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination a,
+.pagination span {
+    margin: 0 5px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #3E2723;
+}
+
+.pagination a:hover {
+    color: #FF6F00;
+}
+
+.pagination .active {
+    color: #FF6F00;
+    font-weight: 700;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    max-width: 600px;
+    text-align: left;
+  }
+  
+  .close-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .modal-content img {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+  
+  .modal-content h3 {
+    font-size: 1.8em;
+  }
+  
+  .modal-content p {
+    font-size: 1.1em;
+  }
+  

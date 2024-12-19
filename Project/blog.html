@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caffeine Blog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="blog.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.3.4/dist/axios.min.js"></script>
+
+    <style>
+        /* Styling card for uniformity */
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .badge {
+            font-size: 0.85rem;
+            border-radius: 50px;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .pagination .page-item:hover .page-link {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        /* Styling the modal */
+        .modal-dialog {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .modal-body {
+            overflow-y: auto;
+            max-height: 60vh; /* Set a max height for the modal content */
+        }
+
+        .modal-body img {
+            max-height: 300px;
+            object-fit: contain;
+            width: 100%;
+            border-radius: 15px;
+        }
+
+        .modal-body p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Ensuring consistent layout */
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .card-text {
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <header class="container">
+            <div class="navbar navbar-expand-lg navbar-light bg-light">
+                <a href="home.html" class="navbar-brand logo">Caffeine</a>
+            </div>
+        </header>
+
+        <main class="container">
+            <section class="py-4">
+                <h1 class="text-center fw-bold">Coffee Blog <br> from coffee experts</h1>
+            </section>
+
+            <div class="row">
+                <section class="col-md-3">
+                    <h3>Categories</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="#">All Article</a></li>
+                        <li class="list-group-item">
+                            <div class="accordion" id="catalogueAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingCatalogue">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCatalogue" aria-expanded="false" aria-controls="collapseCatalogue">
+                                            Catalogue
+                                        </button>
+                                    </h2>
+                                    <div id="collapseCatalogue" class="accordion-collapse collapse" aria-labelledby="headingCatalogue">
+                                        <div class="accordion-body">
+                                            <ul class="list-unstyled">
+                                                <li><a href="#">Filter</a></li>
+                                                <li><a href="#">Accessories</a></li>
+                                                <li><a href="#">Equipment</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Blog Section -->
+                <section class="col-md-9">
+                    <div class="row">
+                        <!-- Loop through the posts dynamically -->
+                        <article class="col-md-4 mb-4" v-for="post in posts" :key="post.id">
+                            <div class="card">
+                                <img :src="post.image" class="card-img-top" alt="Post Image" @click="openModal(post.id)">
+                                <div class="card-body">
+                                    <span class="badge bg-secondary">{{ post.category }}</span>
+                                    <h5 class="card-title">{{ post.title }}</h5>
+                                    <p class="card-text">{{ post.author }} <br><small>{{ post.created_at }}</small></p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Pagination section -->
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            <!-- Previous Page -->
+                            <li class="page-item" v-if="pagination.prev_page_url">
+                                <a class="page-link" href="#" @click.prevent="fetchPosts(pagination.prev_page_url)">Prev</a>
+                            </li>
+
+                            <!-- Page Numbers -->
+                            <li class="page-item" v-for="page in pagination.total_pages" :key="page" :class="{ active: pagination.current_page === page }">
+                                <a class="page-link" href="#" @click.prevent="fetchPosts(pagination.first_page_url)">{{ page }}</a>
+                            </li>
+
+                            <!-- Next Page -->
+                            <li class="page-item" v-if="pagination.next_page_url">
+                                <a class="page-link" href="#" @click.prevent="fetchPosts(pagination.next_page_url)">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </section>
+            </div>
+        </main>
+
+        <!-- Article Modal (Bootstrap Modal) -->
+        <div class="modal fade" id="articleModal" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="articleModalLabel">{{ selectedPost ? selectedPost.title : 'Loading...' }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img :src="selectedPost ? selectedPost.image : ''" class="img-fluid mb-3" alt="Post Image">
+                        <p><strong>Author:</strong> {{ selectedPost ? selectedPost.author : 'Loading...' }}</p>
+                        <p><strong>Category:</strong> {{ selectedPost ? selectedPost.category : 'Loading...' }}</p>
+                        <p>{{ selectedPost ? selectedPost.content : 'Loading content...' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center py-3 bg-light">
+            <p>&copy; 2024 Caffeine Blog. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    posts: [],  // List of posts
+                    pagination: {},  // Pagination data
+                    selectedPost: null  // Selected post for modal
+                };
+            },
+            mounted() {
+                this.fetchPosts();
+            },
+            methods: {
+                // Fetch all posts (mainly for initial page load)
+                async fetchPosts(pageUrl = 'http://localhost:8000/api/posts') {
+                    try {
+                        const response = await axios.get(pageUrl);
+                        this.posts = response.data.data.posts;
+                        this.pagination = response.data.data.pagination;
+                    } catch (error) {
+                        console.error('Error fetching posts:', error);
+                    }
+                },
+
+                // Open the modal with the specific post data
+                async openModal(postId) {
+                    try {
+                        const response = await axios.get(`http://localhost:8000/api/posts/${postId}`);
+                        this.selectedPost = response.data.data.posts[0];  // Get the post data
+                        
+                        // Triggering Bootstrap modal programmatically
+                        const modal = new bootstrap.Modal(document.getElementById('articleModal'));
+                        modal.show();  // Show the modal
+                    } catch (error) {
+                        console.error('Error fetching post details:', error);
+                    }
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+
+</html>

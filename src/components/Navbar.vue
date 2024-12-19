@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a href="home.html" class="navbar-brand logo">Caffeine</a>
+    <router-link to="/location" class="navbar-brand logo">Caffeine</router-link>
     <button class="btn btn-primary ml-auto" @click="openCreateModal">Create</button>
   </nav>
 

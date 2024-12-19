@@ -1,6 +1,9 @@
 <template>
   <div id="app">
+    <!-- Navbar -->
     <Navbar />
+
+    <!-- Main Content -->
     <main class="container">
       <section class="py-4">
         <h1 class="text-center fw-bold">Coffee Blog <br> from coffee experts</h1>
@@ -11,7 +14,11 @@
 
         <!-- Blog Section -->
         <section class="col-md-9">
-          <div class="row">
+          <!-- Router View -->
+          <router-view></router-view>
+
+          <!-- Fallback: Blog Posts -->
+          <div v-if="!$route.name || $route.name === 'Home'" class="row">
             <PostCard
               v-for="post in posts"
               :key="post.id"
@@ -21,6 +28,7 @@
           </div>
 
           <Pagination
+            v-if="!$route.name || $route.name === 'Home'"
             :pagination="pagination"
             :fetchPosts="fetchPosts"
           />
@@ -28,11 +36,14 @@
       </div>
     </main>
 
+    <!-- Post Modal -->
     <PostModal 
       :selectedPost="selectedPost" 
       @update-post="handleUpdatePost"
       @delete-post="handleDeletePost" 
     />
+
+    <!-- Footer -->
     <footer class="text-center py-3 bg-light">
       <p>&copy; 2024 Caffeine Blog. All rights reserved.</p>
     </footer>
@@ -54,13 +65,13 @@ export default {
     Sidebar,
     PostCard,
     Pagination,
-    PostModal
+    PostModal,
   },
   data() {
     return {
       posts: [],
       pagination: {},
-      selectedPost: null
+      selectedPost: null,
     };
   },
   mounted() {
@@ -107,8 +118,8 @@ export default {
       } catch (error) {
         console.error('Error deleting post:', error);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
